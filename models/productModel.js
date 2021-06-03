@@ -21,9 +21,8 @@ const productschema = mongoose.Schema(
             required: true,
         },
 
-        rating: {
+        overallRating: {
             type: Number,
-            enum: ['1', '2', '3', '4', '5'],
         },
 
         numReviews: {
@@ -32,6 +31,11 @@ const productschema = mongoose.Schema(
 
         image: {
             type: String,
+            required: true,
+        },
+
+        isAvailable: {
+            type: Boolean,
             required: true,
         },
 

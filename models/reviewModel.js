@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const orderschema = mongoose.Schema(
    { 
-    buyer={
+    reviewer={
         type:Number,
         required:true
     },
@@ -10,24 +10,15 @@ const orderschema = mongoose.Schema(
         type:Number,
         required:true,
     },
-    quantity={
-        type:Number,
+    comment={
+        type:String,
         required:true,
     },
-    totalPrice={
+    rating={
         type:Number,
         required:true,
+        enum:['1','2','3','4','5']
     },
-    deliveryAddress={
-        type:String,
-        required:true
-
-    },
-    status:{
-        type:String,
-        enum: ['Pending','Shipping','Completed'],
-        required:true
-    }
 }
 );
 const order = mongoose.model('Order',orderschema);
