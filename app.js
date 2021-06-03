@@ -11,6 +11,8 @@ import bodyparser from 'body-parser';
 require('dotenv/config');
 port = process.env.PORT;
 
+app.use(bodyparser.json());
+
 //server initialization
 app.listen(port, () => {
     console.log('Hello');
