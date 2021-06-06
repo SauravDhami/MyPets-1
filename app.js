@@ -1,33 +1,44 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const morgan = require('morgan');
+const mongoose = require('mongoose');
+
+const AppError = require('./helpers/appError');
+const globalErrorHandler = require('./controllers/errorController');
+
 const app = express();
 
-//importing config
+//* IMPORTING ENVIRONMENT VARIABLES
 require('dotenv/config');
-port = process.env.PORT;
 
-//middleware
+const port = process.env.PORT;
+
+//? MIDDLEWARE
+//* HTTP  request logger
 app.use(morgan('dev'));
 
 app.use(express.json());
 
-//importing routes
-
+//? ROUTES HANDLING
 const userRoutes = require('./routes/userRoutes');
-// const orderRoutes = require('./routes/orderRoutes');
 // const productRoutes = require('./routes/productRoutes');
+// const orderRoutes = require('./routes/orderRoutes');
 // const reviewRoutes = require('./routes/reviewRoutes');
 // const adminRoutes = require('./routes/adminRoutes');
 
-//routers
 app.use(`/users`, userRoutes);
-// app.use(`/orders`, orderRoutes);
 // app.use(`/products`, productRoutes);
-// app.use(`/reviewss`, reviewRoutes);
-// app.use(`/admins`, adminRoutes);
+// app.use(`/orders`, orderRoutes);
+// app.use(`/reviews`, reviewRoutes);
+// app.use(`/admin`, adminRoutes);
 
-//database Connection
+//! GLOBAL ERROR HANDLING
+app.use('*', (res, req, next) => {
+    next(new AppError(`Can't find ${req.originalUrl} on this server!`, 404));
+});
+
+app.use(globalErrorHandler);
+
+//* DATABASE CONNECTION
 mongoose
     .connect(process.env.CONNECTION_STRING, {
         useNewUrlParser: true,
@@ -35,16 +46,14 @@ mongoose
         useCreateIndex: true,
         dbName: 'MyPets',
     })
-
     .then(() => {
-        console.log('Database Connection is ready!!');
+        console.log('Database connection is ready...');
     })
-
     .catch((err) => {
         console.log(err);
     });
 
-//server initialization
+//* SERVER
 app.listen(port, () => {
-    console.log('Server is running at port 3300');
+    console.log(`Listening to https://localhost:${port}`);
 });
