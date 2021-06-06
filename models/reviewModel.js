@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 const orderschema = mongoose.Schema(
    { 
     reviewer={
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required:true
     },
     product={

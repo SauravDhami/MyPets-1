@@ -3,16 +3,19 @@ const mongoose = require('mongoose');
 const orderschema = mongoose.Schema(
    { 
     buyer={
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
+        ref: 'User',
         required:true
     },
     product={
-        type:Number,
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Product',
         required:true,
     },
     quantity={
         type:Number,
         required:true,
+        default: 1 ,
     },
     totalPrice={
         type:Number,
@@ -23,6 +26,7 @@ const orderschema = mongoose.Schema(
         required:true
 
     },
+
     status:{
         type:String,
         enum: ['Pending','Shipping','Completed'],
