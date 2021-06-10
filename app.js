@@ -44,7 +44,7 @@ mongoose
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
-        dbName: 'MyPets',
+        dbName: 'SpareDB',
     })
     .then(() => {
         console.log('Database connection is ready...');
